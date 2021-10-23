@@ -1,17 +1,20 @@
 /* See LICENSE file for copyright and license details. */
+#define TERMINAL "kitty"
+#define TERMCLASS "Kitty"
+#define SCREENSHOTSDIR "/home/jtuzp/Pictures/Screenshots"
 
 #define XF86MonBrightnessDown 0x1008ff03
 #define XF86MonBrightnessUp 0x1008ff02
 
 /* appearance */
-static const unsigned int borderpx  = 0;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int default_border = 0;  // to switch back to default border after dynamic border resizing via keybinds
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
-static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
+static       int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails,display systray on the 1st monitor,False: display systray on last monitor*/
@@ -22,16 +25,17 @@ static const int showtab            = showtab_auto;
 static const int toptab             = True;
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 5;
-static const int vertpadbar         = 11;
+static const int vertpadbar         = 10;
 static const int vertpadtab         = 33;
 static const int horizpadtabi       = 15;
 static const int horizpadtabo       = 15;
 static const int scalepreview       = 4;
 static       int tag_preview        = 0;        /* 1 means enable, 0 is off */
 
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:style:medium:size=10",
-                                        "Material Design Icons-Regular:size=10",
+static const char *fonts[]          = { "FantasqueSansMono Nerd Font:style:regular:size=10",
+                                        "Material Design Icons:style:regular:size=11",
                                       };
+static const char rofifont[]        = "3270Medium Nerd Font 17";
 static const char dmenufont[]       = "monospace:size=10";
 static const int colorfultag        = 1;  /* 0 means use SchemeSel for selected non vacant tag */
 
@@ -57,7 +61,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static char *tags[] = {" ", " ", " ", " ", " "};
+static char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5: " };
 
 static const int tagschemes[] = { SchemeTag1, SchemeTag2, SchemeTag3,
                                   SchemeTag4, SchemeTag5
@@ -121,21 +125,42 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", NULL };
-static const char *termcmd[]  = {  "st", NULL }; // change this to your term
-static const char *rofi[] = {"rofi", "-show", "drun", NULL };
+static const char *roficmd1[] = { "rofi", "-show", "drun", "-show-icons", "-opacity", "60", "-lines", "5", "-font", rofifont, NULL};
+static const char *roficmd2[] = { "rofi", "-show", "run", "-opacity", "60", "-lines", "5", "-font", rofifont, NULL};
+static const char *altkeycmd[] = { "setxkbmap", "-rules", "evdev", "-model", "evdev", "-layout", "us", "-variant", "altgr-intl", NULL };
+static const char *screenshot[] = { "flameshot", "gui", "-p", SCREENSHOTSDIR, NULL };
+static const char *fullscreenshot[] = { "flameshot", "full", "-p", SCREENSHOTSDIR, NULL };
+static const char *delayfullscreenshot[] = { "flameshot", "full", "-p", SCREENSHOTSDIR, "-d", "2000", NULL };
+static const char *screensavercmd[] = { "xscreensaver-command", "-l",  NULL };
+static const char *calculatorcmd[] = { "galculator",  NULL };
+static const char *mailspringcmd[] = { "mailspring",  NULL };
+static const char *nemocmd[] = { "nemo",  NULL };
+static const char *termcmd[]  = { TERMINAL, NULL };
+static const char *pausplaycmd[] = { "playerctl", "play-pause", NULL };
+static const char *stopplaycmd[] = { "playerctl", "stop", NULL };
+static const char *nextplaycmd[] = { "playerctl", "next", NULL };
+static const char *prevplaycmd[] = { "playerctl", "previous", NULL };
+
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
 
+#include <X11/XF86keysym.h>
+
 static Key keys[] = {
     /* modifier                     key        function        argument */
-    { MODKEY,                       XK_c,      spawn,          {.v = rofi } },
-
-    // if you dont use st and this script my rm this and uncomment line below it!
-    //{ MODKEY,                       XK_Return, spawn,   SHCMD("~/.local/bin/./st_settings && st")}, 
-    { MODKEY,                       XK_Return, spawn,    {.v = termcmd }},  
-
-    {MODKEY | ControlMask, XK_u, spawn, SHCMD("maim | xclip -selection clipboard -t image/png")},
-    {MODKEY, XK_u, spawn,   SHCMD("maim --select | xclip -selection clipboard -t image/png")},
+    { MODKEY|Mod1Mask,              XK_space,  spawn,          {.v = roficmd1 } },
+    { MODKEY|Mod1Mask,              XK_d,      spawn,          {.v = roficmd2 } },
+    { MODKEY|Mod1Mask,              XK_k,      spawn,          {.v = altkeycmd } },
+    { MODKEY|Mod1Mask,              XK_l,      spawn,          {.v = screensavercmd } },
+    /* This works with a keyboard with Print Screen key*/
+    /* { MODKEY,                       XK_Print,  spawn,          {.v = screenshot } }, */
+    /* { 0,                            XK_Print,  spawn,          {.v = fullscreenshot } }, */
+    /* { Mod1Mask,                     XK_Print,  spawn,          {.v = delayfullscreenshot } }, */
+    /* This works with my Keychron k6*/
+    { ControlMask|ShiftMask,        XK_3,      spawn,          {.v = fullscreenshot } },
+    { ControlMask|ShiftMask,        XK_5,      spawn,          {.v = screenshot } },
+    { ControlMask|ShiftMask,        XK_6,      spawn,          {.v = delayfullscreenshot } },
+    { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
     {0, XF86MonBrightnessDown, spawn, {.v = xd}},
     {0, XF86MonBrightnessUp, spawn, {.v = xi}},
     { MODKEY,                       XK_b,      togglebar,      {0} },
@@ -215,6 +240,18 @@ static Key keys[] = {
     { MODKEY,                       XK_e,      hidewin,        {0} },
     { MODKEY|ShiftMask,             XK_e,      restorewin,     {0} },
 
+    { 0, XF86XK_AudioMute,          spawn,                     SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },
+    { 0, XF86XK_AudioMicMute,       spawn,                     SHCMD("pactl set-source-mute @DEFAULT_SINK@ toggle") },
+    { 0, XF86XK_AudioRaiseVolume,   spawn,                     SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
+    { 0, XF86XK_AudioLowerVolume,   spawn,                     SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
+    { 0, XF86XK_AudioPlay,          spawn,                     {.v = pausplaycmd} },
+    { 0, XF86XK_AudioStop,          spawn,                     {.v = stopplaycmd} },
+    { 0, XF86XK_AudioPrev,          spawn,                     {.v = prevplaycmd} },
+    { 0, XF86XK_AudioNext,          spawn,                     {.v = nextplaycmd} },
+    { 0, XF86XK_Calculator,         spawn,                     {.v = calculatorcmd } },
+    { 0, XF86XK_Mail,               spawn,                     {.v = mailspringcmd } },
+    { 0, XF86XK_WWW,                spawn,                     SHCMD("$BROWSER") },
+    { 0, XF86XK_Explorer,           spawn,                     {.v = nemocmd } },
 };
 
 /* button definitions */
