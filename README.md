@@ -68,3 +68,5 @@ Type=Application
 - status2d
 - underline tags
 - notitle
+- autostart
+- focusonmouse
