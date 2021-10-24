@@ -10,7 +10,7 @@ function run {
 # xbacklight -set 10 &
 
 $HOME/.screenlayout/rotate-screens.sh
-(run $HOME/.dwm/bars/onedark.sh) &
+(run $HOME/.dwm/bar/bar.sh) &
 (run $HOME/bin/redshift.sh) &
 (run $HOME/bin/checkupdates.sh) &
 run /usr/bin/blueman-applet &

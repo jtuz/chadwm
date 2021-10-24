@@ -3,9 +3,6 @@
 #define TERMCLASS "Kitty"
 #define SCREENSHOTSDIR "/home/jtuzp/Pictures/Screenshots"
 
-#define XF86MonBrightnessDown 0x1008ff03
-#define XF86MonBrightnessUp 0x1008ff02
-
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int default_border = 0;  // to switch back to default border after dynamic border resizing via keybinds
@@ -161,8 +158,8 @@ static Key keys[] = {
     { ControlMask|ShiftMask,        XK_5,      spawn,          {.v = screenshot } },
     { ControlMask|ShiftMask,        XK_6,      spawn,          {.v = delayfullscreenshot } },
     { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-    {0, XF86MonBrightnessDown, spawn, {.v = xd}},
-    {0, XF86MonBrightnessUp, spawn, {.v = xi}},
+    {0, XF86XK_MonBrightnessDown, spawn, {.v = xd}},
+    {0, XF86XK_MonBrightnessUp, spawn, {.v = xi}},
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY|ControlMask,                       XK_w,      tabmode,        { -1 } },
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
