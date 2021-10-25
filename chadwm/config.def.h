@@ -155,8 +155,8 @@ static Key keys[] = {
     /* { Mod1Mask,                     XK_Print,  spawn,          {.v = delayfullscreenshot } }, */
     /* This works with my Keychron k6*/
     { ControlMask|ShiftMask,        XK_3,      spawn,          {.v = fullscreenshot } },
-    { ControlMask|ShiftMask,        XK_5,      spawn,          {.v = screenshot } },
-    { ControlMask|ShiftMask,        XK_6,      spawn,          {.v = delayfullscreenshot } },
+    { ControlMask|ShiftMask,        XK_4,      spawn,          {.v = screenshot } },
+    { ControlMask|ShiftMask,        XK_5,      spawn,          {.v = delayfullscreenshot } },
     { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
     {0, XF86XK_MonBrightnessDown, spawn, {.v = xd}},
     {0, XF86XK_MonBrightnessUp, spawn, {.v = xi}},
