@@ -29,7 +29,7 @@ static const int horizpadtabo       = 15;
 static const int scalepreview       = 4;
 static       int tag_preview        = 0;        /* 1 means enable, 0 is off */
 
-static const char *fonts[]          = { "FantasqueSansMono Nerd Font:style:regular:size=10",
+static const char *fonts[]          = { "UbuntuMono Nerd Font:style:regular:size=10",
                                         "Material Design Icons:style:regular:size=11",
                                       };
 static const char rofifont[]        = "3270Medium Nerd Font 17";
@@ -74,10 +74,11 @@ static const Rule rules[] = {
      *	WM_CLASS(STRING) = instance, class
      *	WM_NAME(STRING) = title
      */
-       	/* class      instance    title       tags mask     iscentered   isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            0,           1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           0,           -1 },
-      	{ "eww",      NULL,       NULL,       0,            0,           1,           -1 },
+       	/* class                   instance    title       tags mask     iscentered   isfloating   monitor */
+	{ "Gimp",                  NULL,       NULL,       0,            0,           1,           -1 },
+	{ "Firefox",               NULL,       NULL,       1 << 8,       0,           0,           -1 },
+      	{ "Galculator",            NULL,       NULL,       0,            0,           1,           -1 },
+      	{ "Calculator.Skia.Gtk",   NULL,       NULL,       0,            0,           1,           -1 },
 };
 
 /* layout(s) */
