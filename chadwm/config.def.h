@@ -134,10 +134,10 @@ static const char *calculatorcmd[] = { "galculator",  NULL };
 static const char *mailspringcmd[] = { "mailspring",  NULL };
 static const char *nemocmd[] = { "nemo",  NULL };
 static const char *termcmd[]  = { TERMINAL, NULL };
-static const char *pausplaycmd[] = { "playerctl", "play-pause", NULL };
-static const char *stopplaycmd[] = { "playerctl", "stop", NULL };
-static const char *nextplaycmd[] = { "playerctl", "next", NULL };
-static const char *prevplaycmd[] = { "playerctl", "previous", NULL };
+static const char *pausplaycmd[] = { "playerctl", "--player=spotify,%%any", "play-pause", NULL };
+static const char *stopplaycmd[] = { "playerctl", "--player=spotify,%%any", "stop", NULL };
+static const char *nextplaycmd[] = { "playerctl", "--player=spotify,%%any", "next", NULL };
+static const char *prevplaycmd[] = { "playerctl", "--player=spotify,%%any", "previous", NULL };
 
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
@@ -160,9 +160,9 @@ static Key keys[] = {
     { ControlMask|ShiftMask,        XK_5,      spawn,          {.v = delayfullscreenshot } },
     { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
     {0, XF86XK_MonBrightnessDown, spawn, {.v = xd}},
-    {0, XF86XK_MonBrightnessUp, spawn, {.v = xi}},
+    {0, XF86XK_MonBrightnessUp,   spawn, {.v = xi}},
     { MODKEY,                       XK_b,      togglebar,      {0} },
-    { MODKEY|ControlMask,                       XK_w,      tabmode,        { -1 } },
+    { MODKEY|ControlMask,           XK_w,      tabmode,        { -1 } },
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
     { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
     { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -199,7 +199,7 @@ static Key keys[] = {
     { MODKEY|ControlMask|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },
 
     { MODKEY|ControlMask,           XK_t,      togglegaps,     {0} },
-    { MODKEY|ControlMask|ShiftMask,             XK_d,      defaultgaps,    {0} },
+    { MODKEY|ControlMask|ShiftMask, XK_d,      defaultgaps,    {0} },
 
     { MODKEY,                       XK_q,      killclient,     {0} },
     { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
@@ -208,7 +208,7 @@ static Key keys[] = {
     { MODKEY|ControlMask,           XK_g,      setlayout,      {.v = &layouts[10]} },
     { MODKEY|ControlMask|ShiftMask, XK_t,      setlayout,      {.v = &layouts[13]} },
     { MODKEY,                       XK_space,  setlayout,      {0} },
-    { MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
+    { MODKEY|ControlMask,           XK_comma,  cyclelayout,    {.i = -1 } },
     { MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
     { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
     { MODKEY,                       XK_f,      togglefullscr,  {0} },
