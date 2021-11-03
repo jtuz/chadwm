@@ -134,10 +134,10 @@ static const char *calculatorcmd[] = { "galculator",  NULL };
 static const char *mailspringcmd[] = { "mailspring",  NULL };
 static const char *nemocmd[] = { "nemo",  NULL };
 static const char *termcmd[]  = { TERMINAL, NULL };
-static const char *pausplaycmd[] = { "playerctl", "--player=spotify,%%any", "play-pause", NULL };
-static const char *stopplaycmd[] = { "playerctl", "--player=spotify,%%any", "stop", NULL };
-static const char *nextplaycmd[] = { "playerctl", "--player=spotify,%%any", "next", NULL };
-static const char *prevplaycmd[] = { "playerctl", "--player=spotify,%%any", "previous", NULL };
+static const char *pausplaycmd[] = { "playerctl", "--player=spotify,%any", "play-pause", NULL };
+static const char *stopplaycmd[] = { "playerctl", "--player=spotify,%any", "stop", NULL };
+static const char *nextplaycmd[] = { "playerctl", "--player=spotify,%any", "next", NULL };
+static const char *prevplaycmd[] = { "playerctl", "--player=spotify,%any", "previous", NULL };
 
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
