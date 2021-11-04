@@ -37,7 +37,7 @@ static const char dmenufont[]       = "monospace:size=10";
 static const int colorfultag        = 1;  /* 0 means use SchemeSel for selected non vacant tag */
 
 // theme
-#include "themes/onedark.h"
+#include "themes/tokyonight.h"
 
 static const char *colors[][3]      = {
     /*               fg         bg         border   */
