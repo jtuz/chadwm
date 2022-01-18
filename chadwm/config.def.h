@@ -33,7 +33,6 @@ static const char *fonts[]          = { "UbuntuMono Nerd Font:style:regular:size
                                         "Material Design Icons:style:regular:size=11",
                                       };
 static const char rofifont[]        = "3270Medium Nerd Font 17";
-static const char dmenufont[]       = "monospace:size=10";
 static const int colorfultag        = 1;  /* 0 means use SchemeSel for selected non vacant tag */
 
 // theme
@@ -59,6 +58,13 @@ static const char *colors[][3]      = {
 
 /* tagging */
 static char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5: " };
+
+static const char* eww[]      = { "eww", "open" , "eww", NULL };
+
+static const Launcher launchers[] = {
+       /* command       name to display */
+	{ eww,         "" },
+};
 
 static const int tagschemes[] = { SchemeTag1, SchemeTag2, SchemeTag3,
                                   SchemeTag4, SchemeTag5
@@ -121,8 +127,6 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *roficmd1[] = { "rofi", "-show", "drun", "-show-icons", "-opacity", "60", "-lines", "5", "-font", rofifont, NULL};
 static const char *roficmd2[] = { "rofi", "-show", "run", "-opacity", "60", "-lines", "5", "-font", rofifont, NULL};
 static const char *altkeycmd[] = { "setxkbmap", "-rules", "evdev", "-model", "evdev", "-layout", "us", "-variant", "altgr-intl", NULL };
@@ -138,7 +142,6 @@ static const char *pausplaycmd[] = { "playerctl", "--player=spotify,%any", "play
 static const char *stopplaycmd[] = { "playerctl", "--player=spotify,%any", "stop", NULL };
 static const char *nextplaycmd[] = { "playerctl", "--player=spotify,%any", "next", NULL };
 static const char *prevplaycmd[] = { "playerctl", "--player=spotify,%any", "previous", NULL };
-
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
 
