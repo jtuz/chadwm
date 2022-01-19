@@ -9,6 +9,8 @@
   color: $yellow;
 }
 
-.max {
-  color: $green;
+.close:hover , .min:hover{
+  background-color: $grey;
+  color: $white;
+  border-radius: 50%; 
 }
