@@ -31,19 +31,18 @@ static const int vertpadtab         = 33;
 static const int horizpadtabi       = 15;
 static const int horizpadtabo       = 15;
 static const int scalepreview       = 4;
-static       int tag_preview        = 0;        /* 1 means enable, 0 is off */
+static const int tag_preview        = 0;        /* 1 means enable, 0 is off */
+static const int colorfultag        = 1;        /* 0 means use SchemeSel for selected non vacant tag */
 
 static const char *fonts[]          = { "UbuntuMono Nerd Font:style:regular:size=10",
-                                        "Material Design Icons:style:regular:size=11",
-                                      };
+                                        "Material Design Icons:style:regular:size=11",};
 static const char rofifont[]        = "3270Medium Nerd Font 17";
-static const int colorfultag        = 1;  /* 0 means use SchemeSel for selected non vacant tag */
 
 // theme
 #include "themes/tokyonight.h"
 
 static const char *colors[][3]      = {
-    /*               fg         bg         border   */
+    /*                     fg      bg     border   */
     [SchemeNorm]       = { gray3,  black, gray2 },
     [SchemeSel]        = { gray4,  blue,  blue  },
     [TabSel]           = { blue,   gray2, black  },
@@ -84,12 +83,12 @@ static const Rule rules[] = {
      *	WM_CLASS(STRING) = instance, class
      *	WM_NAME(STRING) = title
      */
-       	/* class                   instance    title       tags mask     iscentered   isfloating   monitor */
-	{ "Gimp",                  NULL,       NULL,       0,            0,           1,           -1 },
-	{ "Firefox",               NULL,       NULL,       1 << 8,       0,           0,           -1 },
-    { "Galculator",            NULL,       NULL,       0,            0,           1,           -1 },
-    { "Calculator.Skia.Gtk",   NULL,       NULL,       0,            0,           1,           -1 },
-    { "eww",                   NULL,       NULL,       0,            0,           1,           -1 },
+  /* class                   instance    title       tags mask     iscentered   isfloating   monitor */
+  { "Gimp",                  NULL,       NULL,       0,            0,           1,           -1 },
+  { "Firefox",               NULL,       NULL,       1 << 8,       0,           0,           -1 },
+  { "Galculator",            NULL,       NULL,       0,            0,           1,           -1 },
+  { "Calculator.Skia.Gtk",   NULL,       NULL,       0,            0,           1,           -1 },
+  { "eww",                   NULL,       NULL,       0,            0,           1,           -1 },
 };
 
 /* layout(s) */
@@ -166,8 +165,8 @@ static Key keys[] = {
     { ControlMask|ShiftMask,        XK_4,      spawn,          {.v = screenshot } },
     { ControlMask|ShiftMask,        XK_5,      spawn,          {.v = delayfullscreenshot } },
     { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-    {0, XF86XK_MonBrightnessDown, spawn, {.v = xd}},
-    {0, XF86XK_MonBrightnessUp,   spawn, {.v = xi}},
+    {0, XF86XK_MonBrightnessDown,              spawn,          {.v = xd}},
+    {0, XF86XK_MonBrightnessUp,                spawn,          {.v = xi}},
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY|ControlMask,           XK_w,      tabmode,        { -1 } },
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -225,9 +224,9 @@ static Key keys[] = {
     { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
     { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
     { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-    { MODKEY|ShiftMask,             XK_minus, 		setborderpx,    {.i = -1 } },
-    { MODKEY|ShiftMask,             XK_p, 	        setborderpx,    {.i = +1 } },
-    { MODKEY|ShiftMask,             XK_w, 	        setborderpx,    {.i = default_border } },
+    { MODKEY|ShiftMask,             XK_minus,  setborderpx,    {.i = -1 } },
+    { MODKEY|ShiftMask,             XK_p,      setborderpx,    {.i = +1 } },
+    { MODKEY|ShiftMask,             XK_w,      setborderpx,    {.i = default_border } },
 
     TAGKEYS(                        XK_1,                      0)
     TAGKEYS(                        XK_2,                      1)
@@ -268,19 +267,19 @@ static Button buttons[] = {
     { ClkWinTitle,          0,              Button2,        zoom,           {0} },
     { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 
-		/* Keep movemouse? */
+    /* Keep movemouse? */
     /* { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} }, */
 
-		/* placemouse options, choose which feels more natural:
-		 *    0 - tiled position is relative to mouse cursor
-		 *    1 - tiled postiion is relative to window center
-		 *    2 - mouse pointer warps to window center
-		 *
-		 * The moveorplace uses movemouse or placemouse depending on the floating state
-		 * of the selected client. Set up individual keybindings for the two if you want
-		 * to control these separately (i.e. to retain the feature to move a tiled window
-		 * into a floating position).
-		 */
+    /* placemouse options, choose which feels more natural:
+     *    0 - tiled position is relative to mouse cursor
+     *    1 - tiled postiion is relative to window center
+     *    2 - mouse pointer warps to window center
+     *
+     * The moveorplace uses movemouse or placemouse depending on the floating state
+     * of the selected client. Set up individual keybindings for the two if you want
+     * to control these separately (i.e. to retain the feature to move a tiled window
+     * into a floating position).
+     */
     { ClkClientWin,         MODKEY,         Button1,        moveorplace,    {.i = 0} },
     { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
     { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },

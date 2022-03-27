@@ -1,4 +1,4 @@
-## Windows Keys                                     
+## Windows Keys
 key               | Do         | Value
 ----------------- | ---------- | ------
  win + b          | togglebar  |   0   
@@ -16,7 +16,7 @@ key               | Do         | Value
  win + shift + k  | movestack  |  -1 
  win + Return     | zoom       |   0
  win + Tab        | view       |   0
- 
+
 ##  Overall gaps
 key             | Do         | Value
 --------------- | ---------- | ------
