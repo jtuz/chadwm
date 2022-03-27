@@ -1,25 +1,29 @@
 /* See LICENSE file for copyright and license details. */
+
+
+#include <X11/XF86keysym.h>
+
 #define TERMINAL "kitty"
 #define TERMCLASS "Kitty"
 #define SCREENSHOTSDIR "/home/jtuzp/Pictures/Screenshots"
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int default_border = 0;  // to switch back to default border after dynamic border resizing via keybinds
+static const unsigned int default_border = 0;   /* to switch back to default border after dynamic border resizing via keybinds */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
-static       int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
+static const int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails,display systray on the 1st monitor,False: display systray on last monitor*/
-static const int showsystray        = 1;     /* 0 means no systray */
+static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always };
 static const int showtab            = showtab_auto;
-static const int toptab             = True;
+static const int toptab             = 1;        /* 0 means bottom tab */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 5;
 static const int vertpadbar         = 10;
@@ -40,40 +44,40 @@ static const int colorfultag        = 1;  /* 0 means use SchemeSel for selected 
 
 static const char *colors[][3]      = {
     /*               fg         bg         border   */
-    [SchemeNorm]       = { gray3, black, gray2 },
-    [SchemeSel]        = { gray4, blue,  blue  },
-    [TabSel]           = { blue, gray2,  black  },
-    [TabNorm]          = { gray3, black, black },
-    [SchemeTag]        = { gray3, black, black },
-    [SchemeTag1]       = { blue,  black, black },
-    [SchemeTag2]       = { red,   black, black },
-    [SchemeTag3]       = { orange, black,black },
-    [SchemeTag4]       = { green, black, black },
-    [SchemeTag5]       = { pink,  black, black },
-    [SchemeLayout]     = { green, black, black }, 
-    [SchemeBtnPrev]    = { green, black, black }, 
+    [SchemeNorm]       = { gray3,  black, gray2 },
+    [SchemeSel]        = { gray4,  blue,  blue  },
+    [TabSel]           = { blue,   gray2, black  },
+    [TabNorm]          = { gray3,  black, black },
+    [SchemeTag]        = { gray3,  black, black },
+    [SchemeTag1]       = { blue,   black, black },
+    [SchemeTag2]       = { red,    black, black },
+    [SchemeTag3]       = { orange, black, black },
+    [SchemeTag4]       = { green,  black, black },
+    [SchemeTag5]       = { pink,   black, black },
+    [SchemeLayout]     = { green,  black, black }, 
+    [SchemeBtnPrev]    = { green,  black, black }, 
     [SchemeBtnNext]    = { yellow, black, black }, 
-    [SchemeBtnClose]   = { red, black, black }, 
+    [SchemeBtnClose]   = { red,    black, black }, 
 };
 
 /* tagging */
 static char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5: " };
 
-static const char* eww[]      = { "eww", "open" , "eww", NULL };
+static const char* eww[] = { "eww", "open" , "eww", NULL };
 
 static const Launcher launchers[] = {
-       /* command       name to display */
-	{ eww,         "" },
+  /* command       name to display */
+  { eww,         "" },
 };
 
-static const int tagschemes[] = { SchemeTag1, SchemeTag2, SchemeTag3,
-                                  SchemeTag4, SchemeTag5
-                                };
+static const int tagschemes[] = { 
+  SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4, SchemeTag5
+};
 
-static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
-static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
-static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
-static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
+static const unsigned int ulinepad     = 5;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke  = 2;	/* thickness / height of the underline */
+static const unsigned int ulinevoffset = 0;	/* how far above the bottom of the bar the line should appear */
+static const int ulineall              = 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const Rule rules[] = {
     /* xprop(1):
@@ -83,8 +87,9 @@ static const Rule rules[] = {
        	/* class                   instance    title       tags mask     iscentered   isfloating   monitor */
 	{ "Gimp",                  NULL,       NULL,       0,            0,           1,           -1 },
 	{ "Firefox",               NULL,       NULL,       1 << 8,       0,           0,           -1 },
-      	{ "Galculator",            NULL,       NULL,       0,            0,           1,           -1 },
-      	{ "Calculator.Skia.Gtk",   NULL,       NULL,       0,            0,           1,           -1 },
+    { "Galculator",            NULL,       NULL,       0,            0,           1,           -1 },
+    { "Calculator.Skia.Gtk",   NULL,       NULL,       0,            0,           1,           -1 },
+    { "eww",                   NULL,       NULL,       0,            0,           1,           -1 },
 };
 
 /* layout(s) */
@@ -118,10 +123,10 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+  { MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+  { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+  { MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+  { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -145,7 +150,6 @@ static const char *prevplaycmd[] = { "playerctl", "--player=spotify,%any", "prev
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
 
-#include <X11/XF86keysym.h>
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
@@ -277,7 +281,7 @@ static Button buttons[] = {
 		 * to control these separately (i.e. to retain the feature to move a tiled window
 		 * into a floating position).
 		 */
-		{ ClkClientWin,         MODKEY,         Button1,        moveorplace,    {.i = 0} },
+    { ClkClientWin,         MODKEY,         Button1,        moveorplace,    {.i = 0} },
     { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
     { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
     { ClkClientWin,         ControlMask,    Button1,        dragmfact,      {0} },
