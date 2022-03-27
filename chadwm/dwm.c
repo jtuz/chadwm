@@ -150,6 +150,13 @@ enum {
   ClkLast
 }; /* clicks */
 
+enum showtab_modes {
+  showtab_never,
+  showtab_auto,
+  showtab_nmodes,
+  showtab_always
+}; /* tab modes */
+
 typedef union {
   int i;
   unsigned int ui;
@@ -638,7 +645,7 @@ void buttonpress(XEvent *e) {
          click = ClkStatusText;
     else
          click = ClkWinTitle;
-    	} 
+    	}
 	if(ev->window == selmon->tabwin) {
 		i = 0; x = 0;
 		for(c = selmon->clients; c; c = c->next){
