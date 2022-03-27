@@ -21,7 +21,6 @@ static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails,display systray on the 1st monitor,False: display systray on last monitor*/
 static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
-enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always };
 static const int showtab            = showtab_auto;
 static const int toptab             = 1;        /* 0 means bottom tab */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -184,12 +183,12 @@ static Key keys[] = {
     { MODKEY,                       XK_Tab,    view,           {0} },
 
     // overall gaps
-    { MODKEY|ControlMask,           XK_i,      incrgaps,       {.i = +1 } },
-    { MODKEY|ControlMask,           XK_d,      incrgaps,       {.i = -1 } },
+    { MODKEY|ControlMask,               XK_i,       incrgaps,       {.i = +1 } },
+    { MODKEY|ControlMask,               XK_d,       incrgaps,       {.i = -1 } },
 
     // inner gaps
-    { MODKEY|ShiftMask,                XK_i,      incrigaps,      {.i = +1 } },
-    { MODKEY|ControlMask|ShiftMask,    XK_i,      incrigaps,      {.i = -1 } },
+    { MODKEY|ShiftMask,                 XK_i,       incrigaps,      {.i = +1 } },
+    { MODKEY|ControlMask|ShiftMask,     XK_i,       incrigaps,      {.i = -1 } },
 
     // outer gaps
     { MODKEY|ControlMask,              XK_o,      incrogaps,      {.i = +1 } },
