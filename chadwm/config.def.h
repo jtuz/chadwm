@@ -148,7 +148,6 @@ static const char *prevplaycmd[] = { "playerctl", "--player=spotify,%any", "prev
 static const char *xi[] = {"xbacklight", "-inc", "7", NULL};
 static const char *xd[] = {"xbacklight", "-dec", "7", NULL};
 
-
 static Key keys[] = {
     /* modifier                     key        function        argument */
     { MODKEY|Mod1Mask,              XK_space,  spawn,          {.v = roficmd1 } },
