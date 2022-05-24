@@ -122,6 +122,7 @@ enum {
   NetWMWindowType,
   NetWMWindowTypeDialog,
   NetClientList,
+  NetClientInfo,
   NetDesktopNames,
   NetDesktopViewport,
   NetNumberOfDesktops,
@@ -283,7 +284,7 @@ static Client *nexttiled(Client *c);
 static void placemouse(const Arg *arg);
 static void pop(Client *);
 static void propertynotify(XEvent *e);
-static void quit(const Arg *arg);
+static void restart(const Arg *arg);
 static Client *recttoclient(int x, int y, int w, int h);
 static Monitor *recttomon(int x, int y, int w, int h);
 static void removesystrayicon(Client *i);
@@ -301,6 +302,7 @@ static int sendevent(Window w, Atom proto, int m, long d0, long d1, long d2,
 static void sendmon(Client *c, Monitor *m);
 static void setborderpx(const Arg *arg);
 static void setclientstate(Client *c, long state);
+static void setclienttagprop(Client *c);
 static void setcurrentdesktop(void);
 static void setdesktopnames(void);
 static void setfocus(Client *c);
@@ -316,8 +318,6 @@ static void show(Client *c);
 static void showhide(Client *c);
 static void showtagpreview(int tag);
 static void sigchld(int unused);
-static void sighup(int unused);
-static void sigterm(int unused);
 static void spawn(const Arg *arg);
 static void switchtag(void);
 static Monitor *systraytomon(Monitor *m);
@@ -390,7 +390,6 @@ static void (*handler[LASTEvent])(XEvent *) = {
     [ResizeRequest] = resizerequest,
     [UnmapNotify] = unmapnotify};
 static Atom wmatom[WMLast], netatom[NetLast], xatom[XLast];
-static int restart = 0;
 static int running = 1;
 static Cur *cursor[CurLast];
 static Clr **scheme, clrborder;
@@ -2033,6 +2032,26 @@ void manage(Window w, XWindowAttributes *wa) {
   updatewindowtype(c);
   updatesizehints(c);
   updatewmhints(c);
+  	{
+		int format;
+		unsigned long *data, n, extra;
+		Monitor *m;
+		Atom atom;
+		if (XGetWindowProperty(dpy, c->win, netatom[NetClientInfo], 0L, 2L, False, XA_CARDINAL,
+				&atom, &format, &n, &extra, (unsigned char **)&data) == Success && n == 2) {
+			c->tags = *data;
+			for (m = mons; m; m = m->next) {
+				if (m->num == *(data+1)) {
+					c->mon = m;
+					break;
+				}
+			}
+		}
+		if (n > 0)
+			XFree(data);
+	}
+	setclienttagprop(c);
+
   if (c->iscentered) {
     c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
     c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
@@ -2419,21 +2438,7 @@ void propertynotify(XEvent *e) {
   }
 }
 
-void quit(const Arg *arg) {
-  if(arg->i == 0)  system("killall bar.sh");
-
-  else if (arg->i)
-    restart = 1;
-
-	Monitor *m;
-	Client *c;
-	for (m = mons; m; m = m->next) {
-		if (m) {
-			for (c = m->stack; c; c = c->next)
-				if (c && HIDDEN(c)) show(c);
-		}
-	}
-
+void restart(const Arg *arg) {
   running = 0;
 }
 
@@ -2650,6 +2655,7 @@ void sendmon(Client *c, Monitor *m) {
   c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
   attach(c);
   attachstack(c);
+  setclienttagprop(c);
   focus(NULL);
   arrange(NULL);
 }
@@ -2836,8 +2842,6 @@ void setup(void) {
   /* clean up any zombies immediately */
   sigchld(0);
 
-  signal(SIGHUP, sighup);
-  signal(SIGTERM, sigterm);
 
   /* init screen */
   screen = DefaultScreen(dpy);
@@ -2882,6 +2886,7 @@ void setup(void) {
   netatom[NetNumberOfDesktops] = XInternAtom(dpy, "_NET_NUMBER_OF_DESKTOPS", False);
   netatom[NetCurrentDesktop] = XInternAtom(dpy, "_NET_CURRENT_DESKTOP", False);
   netatom[NetDesktopNames] = XInternAtom(dpy, "_NET_DESKTOP_NAMES", False);
+  netatom[NetClientInfo] = XInternAtom(dpy, "_NET_CLIENT_INFO", False);
   /* init cursors */
   cursor[CurNormal] = drw_cur_create(drw, XC_left_ptr);
   cursor[CurResize] = drw_cur_create(drw, XC_sizing);
@@ -2917,6 +2922,7 @@ void setup(void) {
 	setdesktopnames();
 	setviewport();
   XDeleteProperty(dpy, root, netatom[NetClientList]);
+  XDeleteProperty(dpy, root, netatom[NetClientInfo]);
   /* select events */
   wa.cursor = cursor[CurNormal]->cursor;
   wa.event_mask = SubstructureRedirectMask | SubstructureNotifyMask |
@@ -2997,15 +3003,6 @@ void sigchld(int unused) {
     ;
 }
 
-void sighup(int unused) {
-  Arg a = {.i = 1};
-  quit(&a);
-}
-
-void sigterm(int unused) {
-  Arg a = {.i = 0};
-  quit(&a);
-}
 
 void spawn(const Arg *arg) {
   if (fork() == 0) {
@@ -3018,6 +3015,15 @@ void spawn(const Arg *arg) {
     exit(EXIT_SUCCESS);
   }
 }
+
+void
+setclienttagprop(Client *c)
+{
+	long data[] = { (long) c->tags, (long) c->mon->num };
+	XChangeProperty(dpy, c->win, netatom[NetClientInfo], XA_CARDINAL, 32,
+			PropModeReplace, (unsigned char *) data, 2);
+}
+
 
 void switchtag(void) {
   	int i;
@@ -3060,8 +3066,11 @@ tabmode(const Arg *arg)
 }
 
 void tag(const Arg *arg) {
+  Client *c;
   if (selmon->sel && arg->ui & TAGMASK) {
+    c = selmon->sel;
     selmon->sel->tags = arg->ui & TAGMASK;
+    setclienttagprop(c);
     focus(NULL);
     arrange(selmon);
   }
@@ -3116,6 +3125,7 @@ void toggletag(const Arg *arg) {
   newtags = selmon->sel->tags ^ (arg->ui & TAGMASK);
   if (newtags) {
     selmon->sel->tags = newtags;
+    setclienttagprop(selmon->sel);
     focus(NULL);
     arrange(selmon);
   }
@@ -3786,8 +3796,6 @@ int main(int argc, char *argv[]) {
   scan();
   runautostart();
   run();
-  if (restart)
-    execvp(argv[0], argv);
   cleanup();
   XCloseDisplay(dpy);
   return EXIT_SUCCESS;
