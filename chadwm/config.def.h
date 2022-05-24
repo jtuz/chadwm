@@ -52,14 +52,14 @@ static const char *colors[][3]      = {
     [SchemeTag3]       = { orange, black, black },
     [SchemeTag4]       = { green,  black, black },
     [SchemeTag5]       = { pink,   black, black },
-    [SchemeLayout]     = { green,  black, black }, 
-    [SchemeBtnPrev]    = { green,  black, black }, 
-    [SchemeBtnNext]    = { yellow, black, black }, 
-    [SchemeBtnClose]   = { red,    black, black }, 
+    [SchemeLayout]     = { green,  black, black },
+    [SchemeBtnPrev]    = { green,  black, black },
+    [SchemeBtnNext]    = { yellow, black, black },
+    [SchemeBtnClose]   = { red,    black, black },
 };
 
 /* tagging */
-static char *tags[] = { "1: ", "2: ", "3: ", "4: ", "5: " };
+static char *tags[] = { "", "", "", "", "" };
 
 static const char* eww[] = { "eww", "open" , "eww", NULL };
 
@@ -235,10 +235,12 @@ static Key keys[] = {
     TAGKEYS(                        XK_7,                      6)
     TAGKEYS(                        XK_8,                      7)
     TAGKEYS(                        XK_9,                      8)
-    {
-        MODKEY|ControlMask,           XK_q,      quit,           {0}
-    },
-    { MODKEY|ShiftMask,             XK_r,      quit,           {1} },
+    // kill window
+    { MODKEY,                           XK_q,       killclient,     {0} },
+    { MODKEY|ControlMask,               XK_q,       spawn,        SHCMD("killall bar.sh dwm") },
+    // restart
+    { MODKEY|ShiftMask,                 XK_r,       restart,           {0} },
+
     { MODKEY,                       XK_e,      hidewin,        {0} },
     { MODKEY|ShiftMask,             XK_e,      restorewin,     {0} },
 
