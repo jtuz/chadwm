@@ -116,6 +116,7 @@ static const Layout layouts[] = {
     { "|M|",      centeredmaster },
     { ">M>",      centeredfloatingmaster },
     { "><>",      NULL },    /* no layout function means floating behavior */
+    { NULL,       NULL },
 };
 
 /* key definitions */
@@ -271,15 +272,15 @@ static Button buttons[] = {
     /* { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} }, */
 
     /* placemouse options, choose which feels more natural:
-     *    0 - tiled position is relative to mouse cursor
-     *    1 - tiled postiion is relative to window center
-     *    2 - mouse pointer warps to window center
-     *
-     * The moveorplace uses movemouse or placemouse depending on the floating state
-     * of the selected client. Set up individual keybindings for the two if you want
-     * to control these separately (i.e. to retain the feature to move a tiled window
-     * into a floating position).
-     */
+    *    0 - tiled position is relative to mouse cursor
+    *    1 - tiled position is relative to window center
+    *    2 - mouse pointer warps to window center
+    *
+    * The moveorplace uses movemouse or placemouse depending on the floating state
+    * of the selected client. Set up individual keybindings for the two if you want
+    * to control these separately (i.e. to retain the feature to move a tiled window
+    * into a floating position).
+    */
     { ClkClientWin,         MODKEY,         Button1,        moveorplace,    {.i = 0} },
     { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
     { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
