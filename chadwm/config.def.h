@@ -25,37 +25,40 @@ static const int showtab            = showtab_auto;
 static const int toptab             = 1;        /* 0 means bottom tab */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 5;
-static const int vertpadbar         = 10;
-static const int vertpadtab         = 33;
+static const int vertpadbar         = 11;
+static const int vertpadtab         = 35;
 static const int horizpadtabi       = 15;
 static const int horizpadtabo       = 15;
 static const int scalepreview       = 4;
 static const int tag_preview        = 0;        /* 1 means enable, 0 is off */
 static const int colorfultag        = 1;        /* 0 means use SchemeSel for selected non vacant tag */
 
-static const char *fonts[]          = { "UbuntuMono Nerd Font:style:regular:size=10",
-                                        "Material Design Icons:style:regular:size=11",};
-static const char rofifont[]        = "3270Medium Nerd Font 17";
+#define ICONSIZE 19   /* icon size */
+#define ICONSPACING 8 /* space between icon and title */
+
+static const char *fonts[]          = {"Iosevka:style:medium:size=12" ,"JetBrainsMono Nerd Font:style:medium:size=11",
+                                        "Material Design Icons Desktop:size=11" };
 
 // theme
 #include "themes/tokyonight.h"
 
 static const char *colors[][3]      = {
-    /*                     fg      bg     border   */
-    [SchemeNorm]       = { gray3,  black, gray2 },
-    [SchemeSel]        = { gray4,  blue,  blue  },
-    [TabSel]           = { blue,   gray2, black  },
-    [TabNorm]          = { gray3,  black, black },
-    [SchemeTag]        = { gray3,  black, black },
-    [SchemeTag1]       = { blue,   black, black },
-    [SchemeTag2]       = { red,    black, black },
-    [SchemeTag3]       = { orange, black, black },
-    [SchemeTag4]       = { green,  black, black },
-    [SchemeTag5]       = { pink,   black, black },
-    [SchemeLayout]     = { green,  black, black },
-    [SchemeBtnPrev]    = { green,  black, black },
-    [SchemeBtnNext]    = { yellow, black, black },
-    [SchemeBtnClose]   = { red,    black, black },
+    /*                     fg       bg      border */
+    [SchemeNorm]       = { gray3,   black,  gray2 },
+    [SchemeSel]        = { gray4,   blue,   blue  },
+    [SchemeTitle]      = { white,   black,  black  }, // active window title
+    [TabSel]           = { blue,    gray2,  black },
+    [TabNorm]          = { gray3,   black,  black },
+    [SchemeTag]        = { gray3,   black,  black },
+    [SchemeTag1]       = { blue,    black,  black },
+    [SchemeTag2]       = { red,     black,  black },
+    [SchemeTag3]       = { orange,  black,  black },
+    [SchemeTag4]       = { green,   black,  black },
+    [SchemeTag5]       = { pink,    black,  black },
+    [SchemeLayout]     = { green,   black,  black },
+    [SchemeBtnPrev]    = { green,   black,  black },
+    [SchemeBtnNext]    = { yellow,  black,  black },
+    [SchemeBtnClose]   = { red,     black,  black },
 };
 
 /* tagging */
