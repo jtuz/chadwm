@@ -16,7 +16,7 @@
 
 # Tag preview (while hovering tag icon)
 
-https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-bece-f60b0700b6be.mp4
+https://user-images.githubusercontent.com/59060246/223068062-d3c9847a-8713-42c7-bc9d-07247a0486a8.mp4
 
 # Requirements
 
@@ -24,7 +24,6 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 - imlib2 
 - xsetroot package (status2d uses this to add colors on dwmbar)
 - JetbrainsMono Nerd Font or any nerd font but dont forget to set it in config.def.h
-- Materiald design icon font - [link](https://github.com/Templarian/MaterialDesign-Font/blob/master/MaterialDesignIconsDesktop.ttf)
 - Make sure to setup your terminal's theme accordingly do chadwm's theme such as nord, onedark etc...
 
 ## Other requirements
@@ -36,9 +35,10 @@ https://user-images.githubusercontent.com/59060246/128050994-17f46934-6604-4430-
 # Install
 
 ```
-git clone https://github.com/siduck/chadwm --depth 1  ~/.config
+git clone https://github.com/siduck/chadwm --depth 1  ~/.config/chadwm
 cd ~/.config/chadwm/
 mv eww ~/.config
+cd chadwm
 sudo make install
 ```
 
@@ -141,3 +141,4 @@ eww open eww
 - [preserveonrestart](https://github.com/PhyTech-R0/dwm-phyOS/blob/master/patches/dwm-6.3-patches/dwm-preserveonrestart-6.3.diff). This patch doesnt let all windows mix up into tag 1 after restarting dwm.
 - autostart
 - focusonmouse
+- shiftview

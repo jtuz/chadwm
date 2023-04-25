@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/dash
 
 # colors
 
-black=#1A1B26
-green=#9ECE6A
-white=#C0CAF5
-grey=#40486a
-blue=#7AA2F7
-red=#F7768E
-darkblue=#668EE3
+black=#1a1b26
+green=#9ece6a
+white=#a9b1d6
+grey=#24283b
+blue=#7aa2f7
+red=#f7768e
+darkblue=$blue
