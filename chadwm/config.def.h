@@ -3,8 +3,8 @@
 
 #include <X11/XF86keysym.h>
 
-#define TERMINAL "kitty"
-#define TERMCLASS "Kitty"
+#define TERMINAL "wezterm"
+#define TERMCLASS "org.wezfurlong.wezterm"
 #define SCREENSHOTSDIR "/home/jtuzp/Pictures/Screenshots"
 
 /* appearance */
