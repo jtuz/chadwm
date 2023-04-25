@@ -30,17 +30,17 @@ static const int vertpadtab         = 35;
 static const int horizpadtabi       = 15;
 static const int horizpadtabo       = 15;
 static const int scalepreview       = 4;
-static const int tag_preview        = 0;        /* 1 means enable, 0 is off */
+static const int tag_preview        = 1;        /* 1 means enable, 0 is off */
 static const int colorfultag        = 1;        /* 0 means use SchemeSel for selected non vacant tag */
 
 #define ICONSIZE 19   /* icon size */
 #define ICONSPACING 8 /* space between icon and title */
 
-static const char *fonts[]          = {"Iosevka:style:medium:size=12" ,"JetBrainsMono Nerd Font:style:medium:size=11",
-                                        "Material Design Icons Desktop:size=11" };
+static const char *fonts[]          = {"UbuntuMono Nerd Font:style:regular:size=12" ,"JetBrainsMono Nerd Font:style:medium:size=11",
+                                        "Material Design Icons:size=12" };
 
 // theme
-#include "themes/tokyonight.h"
+#include "themes/onedark.h"
 
 static const char *colors[][3]      = {
     /*                     fg       bg      border */
@@ -90,6 +90,7 @@ static const Rule rules[] = {
   { "Firefox",               NULL,       NULL,       1 << 8,       0,           0,           -1 },
   { "Galculator",            NULL,       NULL,       0,            0,           1,           -1 },
   { "Calculator.Skia.Gtk",   NULL,       NULL,       0,            0,           1,           -1 },
+  { "Protonvpn",             "protonvpn", NULL,       0,            1,           1,           -1 },
   { "eww",                   NULL,       NULL,       0,            0,           1,           -1 },
 };
 
@@ -134,8 +135,8 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *roficmd1[] = { "rofi", "-show", "drun", "-show-icons", "-opacity", "60", "-lines", "5", "-font", rofifont, NULL};
-static const char *roficmd2[] = { "rofi", "-show", "run", "-opacity", "60", "-lines", "5", "-font", rofifont, NULL};
+static const char *roficmd1[] = { "rofi", "-show", "drun", "-show-icons", "-opacity", "60", "-lines", "5", NULL};
+static const char *roficmd2[] = { "rofi", "-show", "run", "-opacity", "60", "-lines", "5", NULL};
 static const char *altkeycmd[] = { "setxkbmap", "-rules", "evdev", "-model", "evdev", "-layout", "us", "-variant", "altgr-intl", NULL };
 static const char *screenshot[] = { "flameshot", "gui", "-p", SCREENSHOTSDIR, NULL };
 static const char *fullscreenshot[] = { "flameshot", "full", "-p", SCREENSHOTSDIR, NULL };
