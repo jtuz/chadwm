@@ -42,8 +42,9 @@ static const int new_window_attach_on_end = 0; /*  1 means the new window will a
 #define ICONSIZE 19   /* icon size */
 #define ICONSPACING 8 /* space between icon and title */
 
-static const char *fonts[]          = {"UbuntuMono Nerd Font:style:regular:size=12" ,"JetBrainsMono Nerd Font:style:medium:size=11",
-                                        "Material Design Icons:size=12" };
+static const char *fonts[]          = {"Iosevka Nerd Font:style:regular:size=12",
+                                       "Font Awsome 6 Free Solid:style:medium:size=11",
+                                       "Font Awsome 6 Brands:size=12" };
 
 // theme
 #include "themes/onedark.h"
