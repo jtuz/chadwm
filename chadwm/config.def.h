@@ -43,11 +43,11 @@ static const int new_window_attach_on_end = 0; /*  1 means the new window will a
 #define ICONSPACING 8 /* space between icon and title */
 
 static const char *fonts[]          = {"Iosevka Nerd Font:style:regular:size=12",
-                                       "Font Awsome 6 Free Solid:style:medium:size=11",
-                                       "Font Awsome 6 Brands:size=12" };
+                                       "Font Awsome 6 Free Solid:style:medium:size=13",
+                                       "Font Awsome 6 Brands:size=13" };
 
 // theme
-#include "themes/onedark.h"
+#include "themes/tokyonight.h"
 
 static const char *colors[][3]      = {
     /*                     fg       bg      border */
@@ -69,7 +69,8 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static char *tags[] = { "", "", "", "", "" };
+// static char *tags[] = { "", "", "", "", "" };
+static char *tags[] = { "󰲡", "󰲣", "󰲥", "󰲧", "󰲩" };
 
 static const char* eww[] = { "eww", "open" , "eww", NULL };
 
